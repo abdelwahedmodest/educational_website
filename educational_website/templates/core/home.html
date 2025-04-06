@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ site_config.site_name }}{% endblock %}
+
+{% block content %}
+{% load static %}
+<!-- CSS -->
+<link rel="stylesheet" href="{% static 'core/css/core.css' %}">
+<!-- JS -->
+<script src="{% static 'core/js/core.js' %}"></script>
+<!-- Images -->
+<img src="{% static 'core/images/logo.png' %}" alt="Logo">
+<div class="container mt-4">
+    <!-- Featured Videos -->
+    <div class="row mb-4">
+        <h2 class="mb-3">Vidéos en vedette</h2>
+        <div class="row">
+            {% for video in featured_videos %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ video.thumbnail.url }}" class="card-img-top" alt="{{ video.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ video.title }}</h5>
+                        <p class="card-text">{{ video.description|truncatewords:20 }}</p>
+                        <a href="{% url 'video_detail' video.slug %}" class="btn btn-primary">Voir plus</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Recent Videos -->
+    <div class="row mb-4">
+        <h2 class="mb-3">Vidéos récentes</h2>
+        <div class="row">
+            {% for video in recent_videos %}
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <img src="{{ video.thumbnail.url }}" class="card-img-top" alt="{{ video.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ video.title }}</h5>
+                        <p class="card-text">{{ video.description|truncatewords:10 }}</p>
+                        <a href="{% url 'video_detail' video.slug %}" class="btn btn-primary">Voir plus</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Categories -->
+    <div class="row">
+        <h2 class="mb-3">Catégories</h2>
+        <div class="row">
+            {% for category in categories %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ category.name }}</h5>
+                        <p class="card-text">{{ category.description|truncatewords:20 }}</p>
+                        <p class="text-muted">Vidéos: {{ category.video_count }}</p>
+                        <a href="{% url 'category_page' category.slug %}" class="btn btn-outline-primary">Voir la catégorie</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

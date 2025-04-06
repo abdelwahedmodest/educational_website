@@ -1,7 +1,18 @@
 <!-- templates/videos/home.html -->
 {% extends 'base.html' %}
 
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'videos/css/video.css' %}">
+{% endblock %}
+{% block extra_js %}
+    <script src="{% static 'videos/js/video.js' %}"></script>
+{% endblock %}
+
 {% block content %}
+<!-- Images -->
+<img src="{% static 'videos/images/thumbnail.jpg' %}" alt="Video Thumbnail">
+
 <div class="hero-section">
     <h1>Welcome to Educational Hub</h1>
     <p>Choose a category to start learning</p>
@@ -23,3 +34,7 @@
     {% endfor %}
 </div>
 {% endblock %}
+
+
+
+
