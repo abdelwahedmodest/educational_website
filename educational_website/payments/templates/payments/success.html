@@ -1,0 +1,44 @@
+<!-- payments/templates/payments/success.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow text-center">
+                <div class="card-body p-5">
+                    <div class="mb-4">
+                        {% if order.status == 'paid' %}
+                            <div class="bg-success text-white rounded-circle mx-auto p-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                <i class="fas fa-check fa-3x"></i>
+                            </div>
+                            <h1 class="h3 mt-4">Paiement réussi !</h1>
+                            <p class="text-muted">Votre transaction a été complétée avec succès.</p>
+                        {% elif order.payment_method.code == 'cod' %}
+                            <div class="bg-primary text-white rounded-circle mx-auto p-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                <i class="fas fa-money-bill-wave fa-3x"></i>
+                            </div>
+                            <h1 class="h3 mt-4">Commande confirmée !</h1>
+                            <p class="text-muted">Votre commande a été enregistrée avec succès.</p>
+                            <p>Vous effectuerez le paiement à la livraison.</p>
+                        {% else %}
+                            <div class="bg-primary text-white rounded-circle mx-auto p-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                <i class="fas fa-clock fa-3x"></i>
+                            </div>
+                            <h1 class="h3 mt-4">Commande en traitement</h1>
+                            <p class="text-muted">Votre commande est en cours de traitement.</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="border rounded p-4 bg-light text-start my-4">
+                        <h2 class="h5 mb-3">Détails de la commande</h2>
+                        
+                        <div class="row mb-2">
+                            <div class="col-sm-4 fw-bold">Numéro de commande:</div>
+                            <div class="col-sm-8">{{ order.id }}</div>
+                        </div>
+                        
+                        <div class="row mb-2">
+                            <div class="col-sm-4 fw-bold">Date:</div>
+                            <div class="col-sm-8">{{ order.created_at|date:"d/m/Y H:i" }}</div>
+                

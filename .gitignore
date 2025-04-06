@@ -1,0 +1,137 @@
+# Django #
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media
+
+# Environnement virtuel #
+venv/
+env/
+ENV/
+.venv/
+.env/
+.ENV/
+
+# Distribution / packaging #
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Fichiers PyInstaller #
+*.manifest
+*.spec
+
+# Installer logs #
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Tests unitaires / rapports de couverture #
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Traductions #
+*.mo
+
+# Fichiers générés par Django #
+staticfiles/
+.static_storage/
+.media/
+
+# Environnements virtuels avec Celery #
+celerybeat-schedule
+celerybeat.pid
+
+# Fichiers sensibles de configuration #
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.aws/credentials
+credentials.json
+google-credentials.json
+secrets.json
+
+# Clés API, mots de passe, etc #
+*.pem
+*.key
+*.p12
+
+# Dépendances Node.js #
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+
+# IDEs et éditeurs #
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.DS_Store
+
+# Système de fichiers spécifiques à macOS #
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Système de fichiers spécifiques à Windows #
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+*.lnk
+
+# Spécifique au projet Django #
+# Dossier des médias - les fichiers uploadés ne devraient pas être versionnés
+media/
+# Dossier des fichiers statiques collectés - ne devrait pas être versionnés
+staticfiles/
+
+# Dossiers spécifiques à votre projet #
+# Par exemple, si vous avez des configurations locales uniquement pour le développement
+local_config.py
+dev_settings.py
+
+# Fichiers spécifiques aux passerelles de paiement #
+stripe_webhook_signing_secret.txt
+paypal_credentials.json

@@ -1,0 +1,110 @@
+<!-- payments/templates/payments/checkout.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">Finaliser votre achat</h1>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4 shadow">
+                <div class="card-header bg-light">
+                    <h2 class="h5 mb-0">Méthode de Paiement</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" id="checkout-form">
+                        {% csrf_token %}
+                        
+                        <div class="mb-4">
+                            <h3 class="h6 mb-3">Choisissez votre méthode de paiement</h3>
+                            
+                            <div class="row">
+                                {% for method in payment_methods %}
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check payment-method-card p-3 border rounded {% if method.code == 'cod' %}bg-light{% endif %}">
+                                        <input class="form-check-input" type="radio" name="payment_method" 
+                                               id="payment-{{ method.code }}" value="{{ method.id }}" 
+                                               {% if method.code == 'cod' %}checked{% endif %} required>
+                                        <label class="form-check-label d-flex align-items-center" for="payment-{{ method.code }}">
+                                            {% if method.icon %}
+                                                <img src="{{ method.icon.url }}" alt="{{ method.name }}" height="30" class="me-2">
+                                            {% else %}
+                                                <i class="fas {% if method.code == 'stripe' %}fa-credit-card{% elif method.code == 'paypal' %}fa-paypal{% elif method.code == 'cod' %}fa-money-bill-wave{% else %}fa-money-check-alt{% endif %} me-2 fa-2x"></i>
+                                            {% endif %}
+                                            <span>{{ method.name }}</span>
+                                        </label>
+                                        <small class="d-block text-muted mt-1">{{ method.description|truncatechars:60 }}</small>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h3 class="h6 mb-3">Informations de livraison</h3>
+                            
+                            <div class="mb-3">
+                                <label for="shipping-address" class="form-label">Adresse de livraison</label>
+                                <textarea class="form-control" id="shipping-address" name="shipping_address" rows="3" 
+                                          {% if not any_method.requires_shipping %}disabled{% endif %}>{{ order.shipping_address }}</textarea>
+                                
+                                {% if not any_method.requires_shipping %}
+                                <small class="text-muted">Non requis pour un contenu numérique</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h3 class="h6 mb-3">Informations de facturation</h3>
+                            
+                            <div class="mb-3">
+                                <label for="billing-address" class="form-label">Adresse de facturation</label>
+                                <textarea class="form-control" id="billing-address" name="billing_address" rows="3">{{ order.billing_address }}</textarea>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="order-notes" class="form-label">Notes pour votre commande (optionnel)</label>
+                                <textarea class="form-control" id="order-notes" name="order_notes" rows="2">{{ order.order_notes }}</textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">Procéder au paiement</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-header bg-light">
+                    <h2 class="h5 mb-0">Récapitulatif de commande</h2>
+                </div>
+                <div class="card-body">
+                    <h3 class="h6">{{ plan.name }}</h3>
+                    <p>{{ plan.description|truncatechars:100 }}</p>
+                    
+                    <hr>
+                    
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Prix de l'abonnement</span>
+                        <span>{{ plan.price }}€</span>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <span class="fw-bold">Total</span>
+                        <span class="fw-bold">{{ plan.price }}€</span>
+                    </div>
+                    
+                    <hr>
+                    
+                    <p class="mb-0 small">
+                        Accès pendant {{ plan.duration_days }} jours après confirmation du paiement.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
