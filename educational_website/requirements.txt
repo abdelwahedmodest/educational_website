@@ -1,0 +1,9 @@
+Django4.2.8 
+google-api-python-client2.108.0 
+stripe7.6.0 
+paypalrestsdk1.13.1 
+Pillow10.1.0 
+python-dotenv1.0.0 
+dj-database-url2.1.0 
+gunicorn21.2.0 
+whitenoise==6.6.0
