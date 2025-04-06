@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <!-- Main Video Content -->
+        <div class="col-lg-8">
+            <!-- YouTube Video Embed -->
+            <div class="ratio ratio-16x9 mb-4">
+                <iframe src="https://www.youtube.com/embed/{{ object.youtube_id }}" 
+                        title="{{ object.title }}" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen></iframe>
+            </div>
+
+            <!-- Video Details -->
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">{{ object.title }}</h2>
+                    <div class="text-muted mb-3">
+                        <span class="me-3">{{ object.views_count }} views</span>
+                        <span class="me-3">{{ object.likes_count }} likes</span>
+                        <span>{{ object.publish_date|date:"F j, Y" }}</span>
+                    </div>
+                    <p class="card-text">{{ object.description }}</p>
+                </div>
+            </div>
+
+            <!-- Resources if available -->
+            {% if object.resources.exists %}
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Additional Resources</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        {% for resource in object.resources.all %}
+                        <li class="list-group-item">
+                            <a href="{{ resource.file_url }}" target="_blank" class="text-decoration-none">
+                                <i class="fas fa-file-{{ resource.file_type }} me-2"></i>
+                                {{ resource.title }}
+                            </a>
+                            <small class="text-muted">{{ resource.description }}</small>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Related Videos -->
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Related Videos</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        {% for video in related_videos %}
+                        <a href="{% url 'videos:detail' video.pk %}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">{{ video.title }}</h6>
+                                <small>{{ video.publish_date|timesince }} ago</small>
+                            </div>
+                            <small class="text-muted">{{ video.views_count }} views</small>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .ratio-16x9 {
+        height: 56.25%;
+    }
+    .list-group-item {
+        transition: all 0.3s ease;
+    }
+    .list-group-item:hover {
+        background-color: #f8f9fa;
+    }
+</style>
+{% endblock %}
